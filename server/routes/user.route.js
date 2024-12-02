@@ -90,10 +90,10 @@ router.post("/user/register", async (req, res) => {
       expiresIn: "1h",
     });
     res.cookie("token", token, {
-      httpOnly: true,
-      secure: false,
-      maxAge: 60 * 60 * 1000 * 1000,
-      sameSite: "lax",
+      httpOnly: true, // Prevents JavaScript access to the cookie to reduce XSS risks.
+      secure: true, // Ensures the cookie is sent only over HTTPS.
+      maxAge: 60 * 60 * 1000, // Adjust maxAge as needed (this example sets it to 1 hour).
+      sameSite: "none", // Provides additional CSRF protection by restricting cross-site sending.
     });
     res.status(201).json({
       message: "User registered successfully",
@@ -131,10 +131,10 @@ router.post("/user/login", async (req, res) => {
       expiresIn: "1h",
     });
     res.cookie("token", token, {
-      httpOnly: true,
-      secure: false,
-      maxAge: 60 * 60 * 1000 * 1000,
-      sameSite: "lax",
+      httpOnly: true, // Prevents JavaScript access to the cookie to reduce XSS risks.
+      secure: true, // Ensures the cookie is sent only over HTTPS.
+      maxAge: 60 * 60 * 1000, // Adjust maxAge as needed (this example sets it to 1 hour).
+      sameSite: "none", // Provides additional CSRF protection by restricting cross-site sending.
     });
     res.json({
       message: "Login successful",
