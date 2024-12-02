@@ -7,7 +7,7 @@ const app = e();
 
 import UserRouter from "./routes/user.route.js";
 // const FRONTEND_URL = "http://localhost:5173";
-const FRONTEND_URL = "https://book-review-platform-frontend.onrender.com";
+const FRONTEND_URL = "https://sabkebaaphainhum.onrender.com";
 const MONGODB_URL =
   "mongodb+srv://ayushsinghcs21:TUDibiyrftw7o9P4@cluster0.hel7c.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 
