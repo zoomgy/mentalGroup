@@ -3,10 +3,11 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import User from "../models/User.model.js";
 import { v2 as cloudinary } from "cloudinary";
+import authMiddleware from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
-router.put("/admin/approve/:id", async (req, res) => {
+router.put("/admin/approve/:id", authMiddleware, async (req, res) => {
   const adminUser = await User.findById(req.user.userId);
   try {
     if (adminUser.role !== "admin") {
@@ -28,7 +29,7 @@ router.put("/admin/approve/:id", async (req, res) => {
   }
 });
 
-router.get("/admin/pending-users", async (req, res) => {
+router.get("/admin/pending-users", authMiddleware, async (req, res) => {
   const adminUser = await User.findById(req.user.userId);
   try {
     if (adminUser.role !== "admin") {
@@ -151,7 +152,7 @@ router.post("/user/login", async (req, res) => {
   }
 });
 
-router.get("/user/:id/crimes", async (req, res) => {
+router.get("/user/:id/crimes", authMiddleware, async (req, res) => {
   try {
     const userId = req.params.id;
     if (req.user.userId !== userId) {
@@ -168,7 +169,7 @@ router.get("/user/:id/crimes", async (req, res) => {
   }
 });
 
-router.post("/user/:id/crimes", async (req, res) => {
+router.post("/user/:id/crimes", authMiddleware, async (req, res) => {
   try {
     const userId = req.params.id;
     if (req.user.userId !== userId) {
@@ -196,7 +197,7 @@ router.post("/user/:id/crimes", async (req, res) => {
   }
 });
 
-router.delete("/user/:id/crimes", async (req, res) => {
+router.delete("/user/:id/crimes", authMiddleware, async (req, res) => {
   try {
     const userId = req.params.id;
     if (req.user.userId !== userId) {
@@ -227,7 +228,7 @@ router.delete("/user/:id/crimes", async (req, res) => {
   }
 });
 
-router.put("/user/update", async (req, res) => {
+router.put("/user/update", authMiddleware, async (req, res) => {
   const { id, name, email, age, profilePictureUrl, role, password } = req.body;
   try {
     const userDB = await User.findById(id);
@@ -301,7 +302,7 @@ router.post("/auth/logout", (req, res) => {
     .clearCookie("token", {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
+      sameSite: "none",
     })
     .status(200)
     .json({ message: "Logged out successfully" });
