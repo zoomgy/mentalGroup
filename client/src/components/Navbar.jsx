@@ -104,6 +104,15 @@ function Navbar() {
                 <CgProfile />
                 Profile
               </Link>
+              {user.email === "ayush@gmail.com" && (
+                <Link
+                  to="/admin"
+                  className="flex items-center justify-center gap-2 px-4 py-2 text-slate-200 rounded-md hover:bg-slate-500 hover:text-white transition"
+                >
+                  <CgProfile />
+                  Admin
+                </Link>
+              )}
               <button
                 onClick={handleLogout}
                 className="flex items-center justify-center gap-2 px-4 py-2 text-slate-200 rounded-md hover:bg-red-500 hover:text-white transition"
